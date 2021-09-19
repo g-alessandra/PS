@@ -27,3 +27,15 @@ int main(){
 
       return 0;
 }
+
+
+//////---------------------------------
+    vector<string> lines;
+    string line;
+
+    while (getline(input_file, line)){
+        lines.push_back(line);
+    }
+
+    for (const auto &i : lines)
+        cout << i << endl;
