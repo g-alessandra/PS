@@ -53,7 +53,7 @@ int main(){
     while(getline(input_file, line)){//le tudo linha a linha
         if(line.compare(0,9,"SomaMem V") == 0){ //cada vez q tiver somaMen V expande a macro
             char algumacoisa;
-            int espaco;
+            int espacosemps;
             int virgulina;
             string var1;
             string var2;
@@ -63,14 +63,18 @@ int main(){
             for(int i=0; i<line.length(); i++){//pega as posições de espaço e virgula
                 algumacoisa = line.at(i);
                 if(algumacoisa == ' '){
-                    espaco= i;
+                    espacosemps= i;
                 }
                 if(algumacoisa == ','){
                     virgulina = i;
                 }
             }
             
-            for(int i=espaco + 1; i<virgulina; i++){//variavel1
+            
+            // O ERRO TA NESSA PARTE
+            //não ta armazenando em var1 e var2 ao sair do for
+            //----------------------------------------------------------------------------
+            for(int i=espacosemps + 1; i<virgulina; i++){//variavel1
                 var1[p] = line.at(i);
                 p++;
             }
@@ -81,6 +85,7 @@ int main(){
                 q++;
             }
             var2[q]='\0';
+            //----------------------------------------------------------------------------
 
             ifstream dados_macro(dados); //abre o macro para leitura
             dados_macro.is_open();
@@ -89,22 +94,36 @@ int main(){
                 exit(1);
             }
             
-              
-              
-            //FALTA EXPANDIR A MACRO, SUBSTITUINDO Mem1 E Mem2 PELO NOME DA VARIAVEL
-              
-            //while(){//le cada linha alterando Mem1 pela primeira variavel e Mem2 pela segunda variavel
             
-                
-            //}
+            vector<string> commandss;
+            string commands;
+            
+            while(getline(dados_macro, commands)){//le cada linha alterando Mem1 pela primeira variavel e Mem2 pela segunda variavel
+                for(int i=0; i<commands.length(); i++){//pega as posições de espaço e virgula
+                        if(commands.at(i) == '1'){
+                            f_out << "banana";//var1;
+                        }
+                        else if(commands.at(i) == '2'){
+                            f_out << "bolo"; //var2;
+                        }
+                        else if(commands.at(i) == 'M'){
+                            i=i+2;
+                        }
+                        else{
+                            f_out << commands.at(i);
+                        }
+                    }
+                    f_out << "\n";
+
+                }
+            dados_macro.close();
         }
         else{ //não tem q expandir macro, só copia
             f_out << line + "\n";
         }
     }
     
-    
-
     input_file.close();
+    f_out.close();
     return EXIT_SUCCESS;
 }
