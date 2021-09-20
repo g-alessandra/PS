@@ -1,0 +1,7 @@
+mov  AX,Mem1
+push AX
+mov  AX,Mem2
+mov  DX,AX
+pop  AX
+add  AX,DX
+mov  Mem1,AX
